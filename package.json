@@ -2,8 +2,10 @@
   "name": "restapits",
   "version": "1.0.0",
   "description": "a basic rest api in typescript",
-  "main": "app.js",
+  "main": "./dist/app.js",
   "scripts": {
+    "start": "tsc && node --unhandled-rejections=strict ./dist/app.js",
+    "debug": "SET DEBUG=* && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jo Riviera",

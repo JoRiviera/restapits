@@ -1,6 +1,6 @@
 import { CreateUserDto } from "../dto/create.user.dto";
 import { PatchUserDto } from "../dto/patch.user.dto";
-import { PutUserDto } from "../dto/put.user.dto copy";
+import { PutUserDto } from "../dto/put.user.dto";
 
 import shortid from "shortid";
 import debug from "debug";
@@ -39,7 +39,7 @@ class UsersDao {
     return `${user.id} updated via put`;
   } 
 
-  async patchUserById(userId: string, user: PutUserDto) {
+  async patchUserById(userId: string, user: PatchUserDto) {
     const objIndex = this.users.findIndex(
       (obj: { id: string }) => obj.id === userId
     );

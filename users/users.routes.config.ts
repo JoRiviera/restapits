@@ -12,7 +12,6 @@ export class UsersRoutes extends CommonRoutesConfig {
     /**
      * @TODO Route Config
     */
-    
     this.app.route('/users')
       .get((req: express.Request, res: express.Response) => {
         res.status(200).send('List of users');

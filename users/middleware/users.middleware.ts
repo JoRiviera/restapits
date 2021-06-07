@@ -34,7 +34,7 @@ class UsersMiddleware {
     }
   }
 
-  async validateSameEmailBelongToSameUser(
+  async validateSameEmailBelongsToSameUser(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
@@ -54,7 +54,7 @@ class UsersMiddleware {
   ) => {
     if (req.body.email) {
       log('Validating email', req.body.email);
-      this.validateSameEmailBelongToSameUser(req, res, next);
+      this.validateSameEmailBelongsToSameUser(req, res, next);
     } else {
       next();
     }

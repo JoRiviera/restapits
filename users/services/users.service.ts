@@ -6,7 +6,7 @@ import { PatchUserDto } from '../dto/patch.user.dto';
 
 class UsersService implements CRUD {
   list(limit: number, page: number): Promise<any> {
-    throw new Error('Method not implemented.');
+    return UsersDao.getUsers();
   }
   async create(ressource: CreateUserDto) {
     return UsersDao.addUser(ressource);

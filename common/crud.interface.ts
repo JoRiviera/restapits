@@ -4,6 +4,6 @@ export interface CRUD {
   putById: (id: string, ressource: any) => Promise<string>;
   readById: (id: string) => Promise<any>;
   deleteById: (id: string) => Promise<string>;
-  patchById: (id:string, ressource: any) => Promise<string>;
+  patchById: (id: string, ressource: any) => Promise<string>;
 }
 

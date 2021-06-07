@@ -26,6 +26,9 @@ class UsersService implements CRUD {
   async patchById(id: string, ressource: PatchUserDto) {
     return UsersDao.patchUserById(id, ressource);
   };
+  async getUserByEmail(email: string) {
+    return UsersDao.getUserByEmail(email);
+  }
 }
 
 export default new UsersService();

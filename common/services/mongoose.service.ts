@@ -6,20 +6,20 @@ const log: debug.IDebugger = debug('app:mongoose-service');
 class MongooseService {
   private count = 0;
   private mongooseOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectedTimeoutMS: 5000,
-    useFindAndModify: false,
-  }
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      useFindAndModify: false,
+  };
 
   constructor() {
     this.connectWithRetry();
   }
 
-  connectWithRetry() {
+  connectWithRetry= () => {
     log("Attempting MongoDB connection (will retry if needed)'");
     mongoose
-      .connect('mongodb:localhost:27017/api-db', this.mongooseOptions)
+      .connect('mongodb://localhost:27017/api-db', this.mongooseOptions)
       .then(() => {
         log("MongoDB is connected.");
       })

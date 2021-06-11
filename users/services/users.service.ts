@@ -6,14 +6,14 @@ import { PatchUserDto } from '../dto/patch.user.dto';
 
 class UsersService implements CRUD {
   list(limit: number, page: number): Promise<any> {
-    return UsersDao.getUsers();
+    return UsersDao.getUsers(limit, page);
   }
   async create(ressource: CreateUserDto) {
     return UsersDao.addUser(ressource);
   }
 
   async putById(id: string, ressource: PutUserDto) {
-    return UsersDao.putUserById(id, ressource);
+    return UsersDao.updateUserById(id, ressource);
   };
 
   async readById(id: string) {
@@ -24,7 +24,7 @@ class UsersService implements CRUD {
     return UsersDao.removeUserById(id);
   };
   async patchById(id: string, ressource: PatchUserDto) {
-    return UsersDao.patchUserById(id, ressource);
+    return UsersDao.updateUserById(id, ressource);
   };
   async getUserByEmail(email: string) {
     return UsersDao.getUserByEmail(email);

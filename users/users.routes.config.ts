@@ -13,9 +13,6 @@ export class UsersRoutes extends CommonRoutesConfig {
 
   configRoutes(): express.Application {
 
-    /**
-     * @TODO Route Config
-    */
     this.app
       .route('/users')
       .get(usersController.listUsers)
@@ -25,7 +22,7 @@ export class UsersRoutes extends CommonRoutesConfig {
             .isLength({min: 5})
             .withMessage('Must include password 5+ characters'),
         body('firstName').isString(),
-        body('lastName').isString,
+        body('lastName').isString(),
         body('permissionFlags').isInt(),
         BodyValidationMiddleware.verifiyBodyFieldsErrors,
         usersMiddleware.validateEmailDoesntExist,
@@ -47,7 +44,6 @@ export class UsersRoutes extends CommonRoutesConfig {
         body('lastName').isString,
         body('permissionFlags').isInt(),
         BodyValidationMiddleware.verifiyBodyFieldsErrors,
-        usersMiddleware.validateRequiredUserBodyFields,
         usersMiddleware.validateSameEmailBelongsToSameUser,
         usersController.put
       )

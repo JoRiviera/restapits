@@ -4,6 +4,9 @@ import usersController from "./controllers/users.controller";
 import usersMiddleware from "./middleware/users.middleware";
 import {body} from 'express-validator';
 import BodyValidationMiddleware from '../common/middleware/body.validation.middleware';
+import {PermissionFlag} from "../common/middleware/common.permissionflag.enum";
+import jwtMiddleware from '../auth/middleware/jwt.middleware';
+import permissionMiddleware from '../common/middleware/common.permission.middleware'
 
 export class UsersRoutes extends CommonRoutesConfig {
 
@@ -15,7 +18,12 @@ export class UsersRoutes extends CommonRoutesConfig {
 
     this.app
       .route('/users')
-      .get(usersController.listUsers)
+      .get(
+          jwtMiddleware.validJWTNeeded,
+          permissionMiddleware.permissionFlagRequired(
+              PermissionFlag.ADMIN_PERMISSION
+          ),
+          usersController.listUsers)
       .post(
         body('email').isEmail(),
         body('password')
@@ -32,7 +40,11 @@ export class UsersRoutes extends CommonRoutesConfig {
     this.app.param('userId', usersMiddleware.extractUserId);
     this.app
       .route('/users/:userId')
-      .all(usersMiddleware.validateUserExists)
+      .all(
+        usersMiddleware.validateUserExists,
+        jwtMiddleware.validJWTNeeded,
+        permissionMiddleware.onlySameUserOrAdminCanDoThisAction
+      )
       .get(usersController.getUserById)
       .delete(usersController.delete)
       .put(
@@ -45,6 +57,7 @@ export class UsersRoutes extends CommonRoutesConfig {
         body('permissionFlags').isInt(),
         BodyValidationMiddleware.verifiyBodyFieldsErrors,
         usersMiddleware.validateSameEmailBelongsToSameUser,
+        usersMiddleware.usersCantChangePermission,
         usersController.put
       )
       .patch(
@@ -58,6 +71,7 @@ export class UsersRoutes extends CommonRoutesConfig {
         body('permissionFlags').isInt().optional(),
         BodyValidationMiddleware.verifiyBodyFieldsErrors,
         usersMiddleware.validatePatchEmail,
+        usersMiddleware.usersCantChangePermission,
         usersController.patch
       )
     
